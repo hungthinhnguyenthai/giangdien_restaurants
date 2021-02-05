@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+  <context id="giangdien" targetRuntime="MyBatis3">
+    <plugin type="com.aktv.project.giangdien.generator.plugin.LombokPlugin">
+      <property name="lombokAnnotationsString" value="@Data"/>
+    </plugin>
+
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+    <jdbcConnection driverClass="${jdbc.connection.driver.class}"
+                    connectionURL="${jdbc.connection.url}"
+                    userId="${jdbc.connection.user}"
+                    password="${jdbc.connection.password}">
+    </jdbcConnection>
+
+    <javaTypeResolver type="com.aktv.project.giangdien.generator.plugin.CustomTypeResolver">
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="${model.target.package}" targetProject="${model.target.dir}">
+      <property name="trimStrings" value="true"/>
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="${sql.map.target.package}" targetProject="${sql.map.target.dir}">
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="${client.target.package}" targetProject="${client.target.dir}">
+    </javaClientGenerator>
+
+    <table schema="khudichv_db" tableName="business">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="area">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="category">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="customer">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="employee">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="employee_role">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="employee_activity">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="employee_activity_detail">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="order_activity">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="order_activity_detail">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="product">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="gallery">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="table_location">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="table_activity">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="sub_category">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+
+    <table schema="khudichv_db" tableName="store">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+
+    <table schema="khudichv_db" tableName="material">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+
+    <table schema="khudichv_db" tableName="import">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+
+    <table schema="khudichv_db" tableName="import_detail">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="recipe">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="event">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="promotion">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+    <table schema="khudichv_db" tableName="internationalization">
+      <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+    </table>
+
+  </context>
+</generatorConfiguration>

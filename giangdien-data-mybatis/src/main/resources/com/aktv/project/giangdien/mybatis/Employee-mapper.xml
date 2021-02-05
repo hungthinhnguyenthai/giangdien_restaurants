@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aktv.project.giangdien.mybatis.mapper.EmployeeMapper" >
+    <resultMap id="BaseResultFullMap" type="com.aktv.project.giangdien.data.model.Employee" >
+        <id column="empl_id" property="id" jdbcType="VARCHAR"/>
+        <result column="empl_login" property="login" jdbcType="VARCHAR"/>
+        <result column="empl_password" property="password" jdbcType="VARCHAR"/>
+        <result column="empl_first_name" property="firstName" jdbcType="VARCHAR"/>
+        <result column="empl_last_name" property="lastName" jdbcType="VARCHAR"/>
+        <result column="empl_phone_number" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="empl_gender" property="gender" jdbcType="BIT"/>
+        <result column="empl_address" property="address" jdbcType="VARCHAR"/>
+        <result column="empl_profile_picture" property="profilePicture" jdbcType="VARCHAR"/>
+        <result column="empl_indentification_no" property="identificationNo" jdbcType="VARCHAR"/>
+        <result column="empl_qualification" property="qualification" jdbcType="VARCHAR"/>
+        <result column="empl_salary" property="salary" jdbcType="VARCHAR"/>
+        <result column="empl_date_join" property="dateJoin" jdbcType="DATE"/>
+        <result column="empl_date_leave" property="dateLeave" jdbcType="DATE"/>
+        <result column="empl_password_encryption" property="passwordEncryption" jdbcType="VARCHAR"/>
+        <result column="empl_pinpad_password" property="pinpadPassword" jdbcType="VARCHAR"/>
+        <result column="empl_pinpad_password_encryption" property="pinpadPasswordEncryption" jdbcType="VARCHAR"/>
+        <result column="empl_account_non_locked" property="accountNonLocked" jdbcType="BIT"/>
+        <result column="empl_tires" property="minimap" jdbcType="VARCHAR"/>
+        <result column="empl_last_tried_at" property="minimap" jdbcType="VARCHAR"/>
+        <collection property="roles" ofType="com.aktv.project.giangdien.data.model.EmployeeRole">
+            <id column="role_id" property="id" jdbcType="VARCHAR"/>
+            <result column="role_name" property="name" jdbcType="VARCHAR"/>
+            <result column="role_code" property="code" jdbcType="VARCHAR"/>
+            <result column="role_employeeId" property="employeeId" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <sql id="fullResultMapSelect">
+      e.id as empl_id,
+      e.login as empl_login,
+      e.password as empl_password,
+      e.firstname as empl_firstname,
+      e.lastname as empl_lastname,
+      e.phonenumber as empl_phonenumber,
+      e.gender as empl_gender,
+      e.address as empl_address,
+      e.profilepicture as empl_profilepicture,
+      e.identificationNo as empl_indentificationNo,
+      e.qualification as empl_qualification,
+      e.salary as empl_salary,
+      e.date_join as empl_date_join,
+      e.date_leave as empl_date_leave,
+      e.passwordEncryption as empl_passwordEncryption,
+      e.pinpadPassword as empl_pinpadPassword,
+      e.pinpadPasswordEncryption as empl_pinpadPasswordEncryption,
+      e.accountNonLocked as empl_accountNonLocked,
+      e.tries as empl_tries,
+      e.lastTriedAt as empl_lastTriedAt,
+      r.id as role_id,
+      r.name as role_name,
+      r.code as role_code,
+      r.employeeId as role_employeeId
+    </sql>
+    <select id="selectByUserName" resultMap="BaseResultFullMap">
+        SELECT
+        <include refid="fullResultMapSelect"/>
+        FROM
+        employee e
+        LEFT JOIN employee_role r on e.id = r.employeeId
+        <if test="username != null">
+            WHERE e.login = #{username,jdbcType=VARCHAR}
+        </if>
+        ;
+    </select>
+</mapper>

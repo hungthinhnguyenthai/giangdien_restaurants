@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aktv.project.giangdien.mybatis.mapper.GDTableMapper" >
+    <resultMap id="BaseResultFullMap" type="com.aktv.project.giangdien.data.model.TableLocation" >
+        <id column="table_id" property="id" jdbcType="VARCHAR"/>
+        <result column="table_area_id" property="areaId" jdbcType="VARCHAR"/>
+        <result column="table_numberOfSeats" property="numberOfSeats" jdbcType="INTEGER"/>
+        <result column="table_name" property="name" jdbcType="VARCHAR"/>
+        <result column="table_status" property="status" jdbcType="INTEGER" javaType="com.aktv.project.giangdien.data.enums.TableStatus" typeHandler="com.aktv.project.giangdien.mybatis.typehandler.StatusEnumTypeHandler"/>
+        <result column="table_picture" property="picture" jdbcType="VARCHAR"/>
+        <result column="table_posX" property="posX" jdbcType="DOUBLE"/>
+        <result column="table_posY" property="posY" jdbcType="DOUBLE"/>
+        <result column="table_zoom" property="zoom" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="fullResultMapSelect">
+        t.id as table_id,
+        t.areaId as table_area_id,
+        t.name as table_name,
+        t.numberofseats as table_numberOfSeats,
+        t.status as table_status,
+        t.picture as table_picture,
+        t.posx as table_posX,
+        t.posy as table_posY,
+        t.zoom as table_zoom
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultFullMap">
+        SELECT
+        <include refid="fullResultMapSelect"/>
+        FROM
+        table_location t
+        <if test="id != null">
+            WHERE t.id = #{id,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+                           http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd"
+        >
+
+  <import resource="classpath:/META-INF/spring/default-context-datasource.xml"/>
+  <import resource="classpath:/META-INF/spring/default-context-jdbc.xml"/>
+  <import resource="classpath:/META-INF/spring/mybatis-cache-context.xml"/>
+  <import resource="classpath:/META-INF/spring/mybatis-repository-context.xml"/>
+
+
+  <bean id="vendorProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+    <property name="properties">
+      <props>
+        <prop key="MySQL">mysql</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="databaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+    <property name="properties" ref="vendorProperties"/>
+  </bean>
+
+
+  <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="configLocation" value="classpath:/mybatis-configuration.xml"/>
+    <property name="typeHandlersPackage" value="com.aktv.project.giangdien.mybatis.typehandler.scan"/>
+    <property name="failFast" value="true"/>
+    <property name="mapperLocations" value="classpath*:com/aktv/project/giangdien/mybatis/*-mapper.xml"/>
+    <property name="plugins" ref="myBatisPlugins"/>
+    <property name="typeHandlers" ref="myBatisParamHandlers"/>
+    <property name="databaseIdProvider" ref="databaseIdProvider" />
+  </bean>
+
+  <bean id="sessionTemplate"
+        class="org.mybatis.spring.SqlSessionTemplate"
+        c:sqlSessionFactory-ref="sessionFactory"
+          />
+
+  <util:list id="myBatisParamHandlers">
+    <bean class="com.aktv.project.giangdien.mybatis.typehandler.scan.BlowFishParamHandler">
+      <property name="decryptProvider" ref="myBatisBlowfishDecryptProvider"/>
+      <property name="encryptProvider" ref="myBatisBlowfishEncryptProvider"/>
+    </bean>
+  </util:list>
+
+
+  <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"-->
+  <util:list id="myBatisPlugins">
+    <bean class="com.aktv.project.giangdien.mybatis.UIDPlugin"/>
+    <bean class="com.aktv.project.giangdien.mybatis.AuditablePlugin"/>
+  </util:list>
+
+
+  <mybatis:scan base-package="com.aktv.project.giangdien.mybatis.mapper" annotation="com.aktv.project.giangdien.mybatis.mapper.Mapper" factory-ref="sessionFactory"/>
+
+  <bean id="myBatisBlowfishEncryptProvider" class="com.aktv.project.giangdien.data.crypto.impl.BlowfishProvider">
+    <constructor-arg value="Jolv-Ew-Weepp-THREE"/>
+  </bean>
+  <alias name="myBatisBlowfishEncryptProvider" alias="myBatisBlowfishDecryptProvider"/>
+
+</beans>

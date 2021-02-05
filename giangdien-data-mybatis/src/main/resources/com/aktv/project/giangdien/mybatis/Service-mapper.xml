@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aktv.project.giangdien.mybatis.mapper.ServiceMapper" >
+  <resultMap id="BaseResultFullMap" type="com.aktv.project.giangdien.data.model.Business" >
+    <id column="service_id" property="id" jdbcType="VARCHAR" />
+    <result column="service_name" property="name" jdbcType="VARCHAR" />
+    <result column="service_title" property="title" jdbcType="VARCHAR" />
+    <result column="service_description" property="description" jdbcType="VARCHAR" />
+    <result column="service_logo" property="logo" jdbcType="VARCHAR" />
+    <result column="service_url" property="url" jdbcType="VARCHAR" />
+    <collection property="categories" ofType="com.aktv.project.giangdien.data.model.Category">
+      <id column="category_id" property="id" jdbcType="VARCHAR"/>
+      <result column="category_name" property="name" jdbcType="VARCHAR"/>
+      <result column="category_type" property="business" jdbcType="VARCHAR"/>
+      <result column="category_description" property="description" jdbcType="VARCHAR"/>
+      <!--      <collection property="galleries" ofType="com.aktv.project.giangdien.data.model.Gallery">
+              <id column="category_gallery_id" property="id" jdbcType="VARCHAR"/>
+              <result column="category_reference_id" property="referenceid" jdbcType="VARCHAR"/>
+              <result column="category_image" property="imageurl" jdbcType="VARCHAR"/>
+            </collection>-->
+      <!--      <collection property="products" ofType="com.aktv.project.giangdien.data.model.Product">
+              <id column="product_id" property="id" jdbcType="VARCHAR"/>
+              <result column="category_id" property="categoryId" jdbcType="VARCHAR"/>
+              <result column="product_name" property="name" jdbcType="VARCHAR"/>
+              <result column="product_price" property="price" jdbcType="INTEGER"/>
+              <result column="product_description" property="description" jdbcType="VARCHAR"/>
+              <collection property="galleries" ofType="com.aktv.project.giangdien.data.model.Gallery">
+                <id column="product_gallery_id" property="id" jdbcType="VARCHAR"/>
+                <result column="product_reference_id" property="referenceid" jdbcType="VARCHAR"/>
+                <result column="product_image" property="imageurl" jdbcType="VARCHAR"/>
+              </collection>
+            </collection>-->
+    </collection>
+    <collection property="areas" ofType="com.aktv.project.giangdien.data.model.Area">
+      <id column="area_id" property="id" jdbcType="VARCHAR"/>
+      <result column="area_serviceId" property="serviceId" jdbcType="VARCHAR"/>
+      <result column="area_name" property="name" jdbcType="VARCHAR"/>
+      <result column="area_map" property="map" jdbcType="VARCHAR"/>
+      <result column="area_minimap" property="minimap" jdbcType="VARCHAR"/>
+      <collection property="galleries" ofType="com.aktv.project.giangdien.data.model.Gallery">
+        <id column="area_gallery_id" property="id" jdbcType="VARCHAR"/>
+        <result column="area_reference_id" property="areaid" jdbcType="VARCHAR"/>
+        <result column="area_image" property="imageurl" jdbcType="VARCHAR"/>
+      </collection>
+    </collection>
+  </resultMap>
+  <resultMap id="GalleryResultFullMap" type="com.aktv.project.giangdien.data.model.Business" >
+    <id column="service_id" property="id" jdbcType="VARCHAR" />
+    <result column="service_name" property="name" jdbcType="VARCHAR" />
+    <result column="service_title" property="title" jdbcType="VARCHAR" />
+    <result column="service_logo" property="logo" jdbcType="VARCHAR" />
+    <collection property="areas" ofType="com.aktv.project.giangdien.data.model.Area">
+      <id column="area_id" property="id" jdbcType="VARCHAR"/>
+      <result column="area_reference_id" property="serviceId" jdbcType="VARCHAR"/>
+      <result column="area_name" property="name" jdbcType="VARCHAR"/>
+      <collection property="tables" ofType="com.aktv.project.giangdien.data.model.TableLocation">
+        <id column="table_id" property="id" jdbcType="VARCHAR"/>
+        <result column="table_reference_area_id" property="areaId" jdbcType="VARCHAR"/>
+        <result column="table_name" property="name" jdbcType="VARCHAR"/>
+        <collection property="galleries" ofType="com.aktv.project.giangdien.data.model.Gallery">
+          <id column="table_gallery_id" property="id" jdbcType="VARCHAR"/>
+          <result column="table_reference_id" property="tableid" jdbcType="VARCHAR"/>
+          <result column="table_image" property="imageurl" jdbcType="VARCHAR"/>
+          <result column="table_image_name" property="name" jdbcType="VARCHAR"/>
+        </collection>
+      </collection>
+      <collection property="galleries" ofType="com.aktv.project.giangdien.data.model.Gallery">
+        <id column="area_gallery_id" property="id" jdbcType="VARCHAR"/>
+        <result column="area_reference_id" property="areaid" jdbcType="VARCHAR"/>
+        <result column="area_image" property="imageurl" jdbcType="VARCHAR"/>
+        <result column="area_image_name" property="name" jdbcType="VARCHAR"/>
+      </collection>
+    </collection>
+    <collection property="categories" ofType="com.aktv.project.giangdien.data.model.Category">
+      <id column="category_id" property="id" jdbcType="VARCHAR"/>
+      <result column="category_name" property="name" jdbcType="VARCHAR"/>
+      <result column="category_type" property="business" jdbcType="VARCHAR"/>
+        <collection property="subCategories" ofType="com.aktv.project.giangdien.data.model.SubCategory">
+          <id column="subId" property="id" jdbcType="VARCHAR"/>
+          <result column="sub_name" property="name" jdbcType="VARCHAR"/>
+          <collection property="galleries" ofType="com.aktv.project.giangdien.data.model.Gallery">
+            <id column="sub_gallery_id" property="id" jdbcType="VARCHAR"/>
+            <result column="sub_reference_id" property="subcategoryid" jdbcType="VARCHAR"/>
+            <result column="sub_image" property="imageurl" jdbcType="VARCHAR"/>
+            <result column="sub_image_name" property="name" jdbcType="VARCHAR"/>
+          </collection>
+          <collection property="products" ofType="com.aktv.project.giangdien.data.model.Product">
+            <id column="product_id" property="id" jdbcType="VARCHAR"/>
+            <result column="product_subcategoryId" property="subcategoryId" jdbcType="VARCHAR"/>
+            <result column="product_name" property="name" jdbcType="VARCHAR"/>
+            <collection property="galleries" ofType="com.aktv.project.giangdien.data.model.Gallery">
+              <id column="product_gallery_id" property="id" jdbcType="VARCHAR"/>
+              <result column="product_reference_id" property="productid" jdbcType="VARCHAR"/>
+              <result column="product_image" property="imageurl" jdbcType="VARCHAR"/>
+              <result column="product_image_name" property="name" jdbcType="VARCHAR"/>
+            </collection>
+          </collection>
+        </collection>
+    </collection>
+  </resultMap>
+  <sql id="GalleryResultMapSelect">
+    s.id as service_id, s.name as service_name, s.logo as service_logo, s.title as service_title,
+    a.id as area_id, a.name as area_name, a.serviceId as area_reference_id,
+    a_img.id as area_gallery_id, a_img.areaid as area_reference_id, a_img.imageurl as area_image, a_img.name as area_image_name,
+    t.id as table_id, t.name as table_name, t.areaId as table_reference_area_id,
+    t_img.id as table_gallery_id, t_img.tableId as table_reference_id, t_img.imageurl as table_image, t_img.name as table_image_name,
+    c.id as category_id, c.name as category_name, c.service_id as category_type,
+    sc.id as subId, sc.name as sub_name,
+    scg.id as sub_gallery_id, scg.subcategoryid as sub_gallery_id, scg.imageurl as sub_image, scg.name as sub_image_name,
+    p.id as product_id, p.subcategoryId as product_subcategoryId, p.name as product_name,
+    pg.id as product_gallery_id, pg.productid as product_reference_id, pg.imageurl as product_image, pg.name as product_image_name
+  </sql>
+  <select id="selectGallery" resultMap="GalleryResultFullMap">
+    SELECT
+    <include refid="GalleryResultMapSelect"/>
+    FROM
+    business s
+    LEFT JOIN area a on s.id = a.serviceId
+    LEFT JOIN gallery a_img on a.id = a_img.areaId
+    LEFT JOIN table_location t on a.id = t.areaId
+    LEFT JOIN gallery t_img on t.id = t_img.tableId
+    LEFT JOIN category c on s.id = c.service_id
+    LEFT JOIN sub_category sc on c.id = sc.categoryId
+    LEFT JOIN gallery scg on sc.id = scg.subCategoryId
+    LEFT JOIN product p on sc.id = p.subCategoryId
+    LEFT JOIN gallery pg on p.id = pg.productId
+    <if test="index != null and resultSize != null">
+      LIMIT #{index}, #{resultSize}
+    </if>
+    ;
+  </select>
+  <sql id="basicResultMapSelect">
+    s.id as service_id,
+    s.name as service_name,
+    s.title as service_title,
+    s.description as service_description,
+    s.logo as service_logo,
+    s.url as service_url
+  </sql>
+  <resultMap id="BaseResultMap" type="com.aktv.project.giangdien.data.model.Business" >
+    <id column="service_id" property="id" jdbcType="VARCHAR" />
+    <result column="service_name" property="name" jdbcType="VARCHAR" />
+    <result column="service_title" property="title" jdbcType="VARCHAR" />
+    <result column="service_description" property="description" jdbcType="VARCHAR" />
+    <result column="service_logo" property="logo" jdbcType="VARCHAR" />
+    <result column="service_url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, title, description, logo, url
+  </sql>
+  <sql id="fullResultMapSelect">
+    s.id as service_id,
+    s.name as service_name,
+    s.title as service_title,
+    s.description as service_description,
+    s.logo as service_logo,
+    s.url as service_url,
+    a.id as area_id,
+    a.name as area_name,
+    a.map as area_map,
+    a.minimap as area_minimap,
+    a.serviceId as area_serviceId,
+    a_img.id as area_gallery_id,
+    a_img.areaId as area_reference_id,
+    a_img.imageUrl as area_image
+    /*c.id as category_id,
+    c.name as category_name,
+    c.service_id as category_type,
+    c.description as category_description,
+    c_img.id as category_gallery_id,
+    c_img.referenceId as category_reference_id,
+    c_img.imageUrl as category_image,
+    p.id as product_id,
+    p.name as product_name,
+    p.price as product_price,
+    p.description as product_description,
+    p_img.id as product_gallery_id,
+    p_img.referenceId as product_reference_id,
+    p_img.imageUrl as product_image*/
+  </sql>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="basicResultMapSelect" />
+    from business s
+    where s.name = #{name,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectInRangeAll" resultMap="BaseResultFullMap">
+    SELECT
+    <include refid="fullResultMapSelect"/>
+    FROM
+    business s
+    LEFT JOIN area a on s.id = a.serviceId
+    LEFT JOIN gallery a_img on a.id = a_img.areaId
+    /*LEFT JOIN category c on s.id = c.service_id
+    LEFT JOIN gallery c_img on s.id = c_img.referenceId
+    LEFT JOIN product p on c.id = p.category_id
+    LEFT JOIN gallery p_img on p.id = p_img.referenceId*/
+    ORDER BY s.name
+    <if test="index != null and resultSize != null">
+      LIMIT #{index}, #{resultSize}
+    </if>
+    ;
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from business
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from business
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from business
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.aktv.project.giangdien.data.model.Business" >
+    insert into business (id, name, title, description,
+    logo, url)
+    values (#{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+    #{logo,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aktv.project.giangdien.data.model.Business" >
+    insert into business
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aktv.project.giangdien.data.model.Business" >
+    update business
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aktv.project.giangdien.data.model.Business" >
+    update business
+    set name = #{name,jdbcType=VARCHAR},
+    title = #{title,jdbcType=VARCHAR},
+    description = #{description,jdbcType=VARCHAR},
+    logo = #{logo,jdbcType=VARCHAR},
+    url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+  <security:global-method-security secured-annotations="enabled"/>
+
+  <security:http name="admin" pattern="/controller/administrator/**" auto-config="true">
+    <security:access-denied-handler error-page="/controller/error/404"/>
+    <security:csrf disabled="true"/>
+    <security:intercept-url pattern="/controller/administrator" access="hasAnyRole('SUPER_ADMIN', 'EMPLOYEE')"/>
+    <security:intercept-url pattern="/controller/administrator/login" access="hasAnyRole('ROLE_ANONYMOUS')"/>
+
+    <security:intercept-url pattern="/controller/administrator/*" access="hasAnyRole('SUPER_ADMIN', 'EMPLOYEE')"/>
+    <security:form-login login-page="/controller/administrator/login" default-target-url="/controller/administrator"
+                         username-parameter="j_username"
+                         password-parameter="j_password"
+                         login-processing-url="/controller/administrator/j_spring_security_check"
+                         authentication-success-handler-ref="authenticationSuccessHandler"
+                         authentication-failure-url="/controller/administrator/login?login_error=1"/>
+    <security:logout logout-url="/controller/administrator/logout" logout-success-url="/controller/administrator/login"/>
+  </security:http>
+
+  <security:http name="user" auto-config="false"  create-session="never">
+    <security:access-denied-handler error-page="/controller/error/403"/>
+    <security:headers disabled="true"/>
+    <security:intercept-url pattern="/favicon.ico" access="hasAnyRole('ROLE_ANONYMOUS', 'ROLE_BO_USER')"/>
+    <security:intercept-url pattern="/**/*.js" access="hasAnyRole('ROLE_ANONYMOUS', 'ROLE_BO_USER')"/>
+    <security:intercept-url pattern="/**/*.css" access="hasAnyRole('ROLE_ANONYMOUS', 'ROLE_BO_USER')"/>
+    <security:intercept-url pattern="/login.jsp" access="hasAnyRole('ROLE_ANONYMOUS', 'ROLE_BO_USER')"/>
+    <security:intercept-url pattern="/version" access="hasAnyRole('ROLE_ANONYMOUS', 'ROLE_BO_USER')"/>
+    <security:intercept-url pattern="/healthCheck" access="hasAnyRole('ROLE_ANONYMOUS', 'ROLE_BO_USER')"/>
+
+
+    <security:intercept-url pattern="/controller/order/**" access="hasAnyRole('ROLE_SUPER_ADMIN', 'ROLE_USER')"/>
+    <security:intercept-url pattern="/controller/customer/**" access="hasRole('ROLE_CUSTOMER_SERVICE_ADMIN')"/>
+
+    <security:intercept-url pattern="/**" access="hasRole('ROLE_ANONYMOUS')"/>
+
+    <security:form-login login-page="/controller/account/login" default-target-url="/controller/home"
+                         username-parameter="j_username"
+                         password-parameter="j_password"
+                         login-processing-url="/j_spring_security_check"
+                         authentication-success-handler-ref="authenticationSuccessHandler"
+                         authentication-failure-url="/controller/account/login?login_error=1"/>
+
+    <security:http-basic/>
+    <!--logout-->
+    <security:logout logout-url="/j_spring_security_logout"  logout-success-url="/controller/home"/>
+    <security:anonymous/>
+
+  </security:http>
+
+  <bean id="backOfficeUserDetails" class="com.aktv.project.giangdien.security.BackOfficeUserDetails"/>
+
+  <bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+    <property name="useReferer" value="true" />
+  </bean>
+
+  <bean id="md5PasswordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+  <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    <property name="userDetailsService" ref="backOfficeUserDetails"/>
+    <property name="passwordEncoder" ref="md5PasswordEncoder"/>
+  </bean>
+
+  <security:authentication-manager>
+    <security:authentication-provider ref="authenticationProvider"/>
+  </security:authentication-manager>
+
+  <bean id="userSecurityService" class="com.aktv.project.giangdien.data.security.UserSecurityService"/>
+  <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+  
+  <bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+     <property name="maxUploadSize" value="100000000" />
+  </bean>
+</beans>

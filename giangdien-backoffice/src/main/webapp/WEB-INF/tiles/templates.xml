@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="abstract.index" template="/jsp/layout/classic.jsp">
+        <put-attribute name="page" value="index"/>
+    </definition>
+
+    <definition name="home.index" extends="abstract.index">
+        <put-attribute name="tab" value="Home"/>
+        <put-attribute name="title" value=""/>
+        <put-attribute name="content" value="/jsp/index.jsp"/>
+    </definition>
+
+    <definition name="home.privacy" extends="abstract.index">
+        <put-attribute name="tab" value="AboutUs"/>
+        <put-attribute name="title" value="Giang Dien | Privacy"/>
+        <put-attribute name="content" value="/jsp/about/privacy.jsp"/>
+    </definition>
+
+    <definition name="home.aboutus" extends="abstract.index">
+        <put-attribute name="tab" value="AboutUs"/>
+        <put-attribute name="title" value="Giang Dien | About Us"/>
+        <put-attribute name="content" value="/jsp/about/aboutus.jsp"/>
+    </definition>
+
+    <definition name="contacts.index" extends="abstract.index">
+        <put-attribute name="tab" value="Contacts"/>
+        <put-attribute name="title" value="Giang Dien | Contact Us"/>
+        <put-attribute name="content" value="/jsp/about/contacts.jsp"/>
+    </definition>
+
+    <definition name="coffee.index" extends="abstract.index">
+        <put-attribute name="tab" value="Coffee"/>
+        <put-attribute name="title" value="Giang Dien | Coffee Zone"/>
+        <put-attribute name="content" value="/jsp/coffee/index.jsp"/>
+    </definition>
+
+    <definition name="404" extends="abstract.index">
+        <put-attribute name="tab" value="Home"/>
+        <put-attribute name="title" value="Giang Dien | Page Not Found"/>
+        <put-attribute name="content" value="/jsp/404.jsp"/>
+    </definition>
+
+    <definition name="comingsoon"  extends="abstract.index">
+        <put-attribute name="tab" value="Home"/>
+        <put-attribute name="title" value="Giang Dien | Page Not Found"/>
+        <put-attribute name="content" value="/jsp/comingsoon.jsp"/>
+    </definition>
+
+    <definition name="account.login"  extends="abstract.index">
+        <put-attribute name="tab" value="Home"/>
+        <put-attribute name="page" value="account"/>
+        <put-attribute name="title" value="Giang Dien | Account"/>
+        <put-attribute name="content" value="/jsp/account/login.jsp"/>
+    </definition>
+
+    <definition name="account.shoppingCart"  extends="abstract.index">
+        <put-attribute name="tab" value="Home"/>
+        <put-attribute name="page" value="shoppingCart"/>
+        <put-attribute name="title" value="Giang Dien | Your Shopping Cart"/>
+        <put-attribute name="content" value="/jsp/account/shoppingCart.jsp"/>
+    </definition>
+
+    <definition name="coffee.order"  extends="abstract.index">
+        <put-attribute name="header" value="/jsp/coffee/coffeeHeader.jsp"/>
+        <put-attribute name="tab" value="Coffee"/>
+        <put-attribute name="title" value="Giang Dien - Coffee Zone"/>
+        <put-attribute name="content" value="/jsp/coffee/orderNow.jsp"/>
+        <put-attribute name="footer" value="/jsp/coffee/coffeeFooter.jsp"/>
+    </definition>
+
+    <definition name="coffee.table" template="/jsp/layout/empty.jsp" extends="abstract.index">
+        <put-attribute name="content" value="/jsp/coffee/table/tableItem.jsp"/>
+    </definition>
+
+    <definition name="product.index"  extends="abstract.index">
+        <put-attribute name="tab" value="Coffee"/>
+        <put-attribute name="page" value="product"/>
+        <put-attribute name="title" value="Giang Dien | Product"/>
+        <put-attribute name="content" value="/jsp/product/index.jsp"/>
+    </definition>
+
+    <!-- Admin templates -->
+
+    <definition name="admin.abstract" template="/jsp/layout/admin.jsp">
+        <put-attribute name="hasForm" value="false"/>
+        <put-attribute name="hasTask" value="false"/>
+        <put-attribute name="hasChart" value="false"/>
+        <put-attribute name="hasCalendar" value="false"/>
+        <put-attribute name="hasReportMap" value="false"/>
+        <put-attribute name="isMainBoard" value="false"/>
+        <put-attribute name="magnificPopup" value="false"/>
+        <put-attribute name="summernote" value="false"/>
+        <put-attribute name="header" value="/jsp/section/adminHeader.jsp"/>
+        <put-attribute name="toolbox" value="/jsp/admin/toolbox.jsp"/>
+        <put-attribute name="headerTop" value="/jsp/section/adminHeaderTop.jsp"/>
+        <put-attribute name="sidebar" value="/jsp/admin/sidebar.jsp"/>
+        <put-attribute name="topbar" value="/jsp/admin/topbar.jsp"/>
+        <put-attribute name="main" value="/jsp/layout/main.jsp"/>
+        <put-attribute name="footerTop" value="/jsp/section/adminFooterTop.jsp"/>
+        <put-attribute name="footer" value="/jsp/section/adminFooter.jsp"/>
+        <put-attribute name="rightbar" value=""/>
+        <put-attribute name="tagsPlugin" value="false"/>
+        <put-attribute name="fileUploadPlugin" value="false"/>
+        <put-attribute name="holderPlugin" value="false"/>
+        <put-attribute name="datePlugin" value="false"/>
+        <put-attribute name="classType" value=""/>
+        <put-attribute name="messageDocker" value="false"/>
+        <put-attribute name="canvasBG" value="false"/>
+    </definition>
+
+    <definition name="admin.index" extends="admin.abstract">
+        <put-attribute name="hasTask" value="true"/>
+        <put-attribute name="hasChart" value="true"/>
+        <put-attribute name="hasCalendar" value="true"/>
+        <put-attribute name="hasReportMap" value="true"/>
+        <put-attribute name="isMainBoard" value="true"/>
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="classType" value="dashboard-page"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard"/>
+        <put-attribute name="content" value="/jsp/admin/dashboard.jsp"/>
+    </definition>
+
+    <definition name="admin.profile" extends="admin.abstract">
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="classType" value="profile-page"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Profile Page"/>
+        <put-attribute name="content" value="/jsp/admin/profile.jsp"/>
+    </definition>
+
+    <definition name="admin.invoice" extends="admin.abstract">
+        <put-attribute name="classType" value="invoice-page"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Invoice Details"/>
+        <put-attribute name="content" value="/jsp/admin/invoice.jsp"/>
+    </definition>
+
+    <definition name="admin.products" extends="admin.abstract">
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="classType" value="ecom-products-page"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Products"/>
+        <put-attribute name="content" value="/jsp/admin/products.jsp"/>
+        <put-attribute name="tagsPlugin" value="true"/>
+        <put-attribute name="fileUploadPlugin" value="true"/>
+        <put-attribute name="holderPlugin" value="true"/>
+    </definition>
+
+    <definition name="admin.orders" extends="admin.abstract">
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="classType" value="ecommerce-page"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Orders"/>
+        <put-attribute name="content" value="/jsp/admin/orders.jsp"/>
+        <put-attribute name="datePlugin" value="true"/>
+        <put-attribute name="holderPlugin" value="true"/>
+    </definition>
+
+    <definition name="admin.customers" extends="admin.abstract">
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="classType" value="ecommerce-page"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Customers"/>
+        <put-attribute name="content" value="/jsp/admin/customers.jsp"/>
+        <put-attribute name="tagsPlugin" value="true"/>
+        <put-attribute name="fileUploadPlugin" value="true"/>
+        <put-attribute name="holderPlugin" value="true"/>
+    </definition>
+    <definition name="admin.storeSettings" extends="admin.abstract">
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="datePlugin" value="true"/>
+        <put-attribute name="classType" value="content_wrapper"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Store Settings"/>
+        <put-attribute name="content" value="/jsp/admin/storesettings.jsp"/>
+        <put-attribute name="fileUploadPlugin" value="true"/>
+        <put-attribute name="holderPlugin" value="true"/>
+    </definition>
+    <definition name="admin.gallery" extends="admin.abstract">
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="magnificPopup" value="true"/>
+        <put-attribute name="classType" value="gallery-page"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Gallery"/>
+        <put-attribute name="content" value="/jsp/admin/gallery.jsp"/>
+    </definition>
+
+    <definition name="admin.messages" extends="admin.abstract">
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="summernote" value="true"/>
+        <put-attribute name="messageDocker" value="true"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Messages"/>
+        <put-attribute name="content" value="/jsp/admin/messages.jsp"/>
+    </definition>
+
+    <definition name="admin.login" extends="admin.abstract">
+        <put-attribute name="hasForm" value="true"/>
+        <put-attribute name="canvasBG" value="true"/>
+        <put-attribute name="classType" value="external-page sb-l-c sb-r-c"/>
+        <put-attribute name="main" value="/jsp/admin/login.jsp"/>
+        <put-attribute name="title" value="AkTv Admin Dashboard - Login"/>
+        <put-attribute name="content" value=""/>
+    </definition>
+
+
+
+    <!-- AkTv templates -->
+
+    <definition name="aktv.index"  extends="abstract.index">
+        <put-attribute name="header" value="/jsp/aktv/header.jsp"/>
+        <put-attribute name="headerTop" value="/jsp/aktv/headerTop.jsp"/>
+        <put-attribute name="tab" value="Home"/>
+        <put-attribute name="title" value="AkTv Digital Solution - This is the beginning of anything you want"/>
+        <put-attribute name="content" value="/jsp/aktv/index.jsp"/>
+        <put-attribute name="footerTop" value="/jsp/aktv/footerTop.jsp"/>
+        <put-attribute name="footer" value="/jsp/aktv/footer.jsp"/>
+    </definition>
+
+    <definition name="aktv.aboutUs" extends="abstract.index">
+        <put-attribute name="header" value="/jsp/aktv/header.jsp"/>
+        <put-attribute name="headerTop" value="/jsp/aktv/headerTop.jsp"/>
+        <put-attribute name="tab" value="Aboutus"/>
+        <put-attribute name="title" value="AkTv Digital Solution - About us"/>
+        <put-attribute name="content" value="/jsp/aktv/section/aboutUs.jsp"/>
+        <put-attribute name="footerTop" value="/jsp/aktv/footerTop.jsp"/>
+        <put-attribute name="footer" value="/jsp/aktv/footer.jsp"/>
+    </definition>
+
+</tiles-definitions>

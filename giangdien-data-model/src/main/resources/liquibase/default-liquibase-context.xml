@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+  <bean id="myLiquiBase" class="liquibase.integration.spring.SpringLiquibase">
+    <property name="dataSource" ref="dataSource" />
+    <property name="changeLog" value="classpath:/liquibase/changelog.xml"/>
+  </bean>
+
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <constructor-arg ref="dataSource"/>
+  </bean>
+
+  <jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="classpath:${database.migration}*.sql"/>
+  </jdbc:initialize-database>
+
+</beans>

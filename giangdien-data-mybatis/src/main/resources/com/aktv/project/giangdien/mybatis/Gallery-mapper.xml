@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aktv.project.giangdien.mybatis.mapper.GalleryMapper" >
+  <resultMap id="BaseResultMap" type="com.aktv.project.giangdien.data.model.Gallery" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="areaId" property="areaid" jdbcType="VARCHAR" />
+    <result column="imageUrl" property="imageurl" jdbcType="VARCHAR" />
+    <result column="tableId" property="tableid" jdbcType="VARCHAR" />
+    <result column="productId" property="productid" jdbcType="VARCHAR" />
+    <result column="subCategoryId" property="subcategoryid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, areaId, imageUrl, tableId, productId, subCategoryId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from gallery
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from gallery
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.aktv.project.giangdien.data.model.Gallery" >
+    insert into gallery (id, areaId, imageUrl, tableId,
+      productId, subCategoryId)
+    values (#{id,jdbcType=VARCHAR}, #{areaid,jdbcType=VARCHAR}, #{imageurl,jdbcType=VARCHAR}, #{tableid,jdbcType=VARCHAR},
+      #{productid,jdbcType=VARCHAR}, #{subcategoryid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aktv.project.giangdien.data.model.Gallery" >
+    insert into gallery
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaid != null" >
+        areaId,
+      </if>
+      <if test="imageurl != null" >
+        imageUrl,
+      </if>
+      <if test="tableid != null" >
+        tableId,
+      </if>
+      <if test="productid != null" >
+        productId,
+      </if>
+      <if test="subcategoryid != null" >
+        subCategoryId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaid != null" >
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurl != null" >
+        #{imageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tableid != null" >
+        #{tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="subcategoryid != null" >
+        #{subcategoryid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aktv.project.giangdien.data.model.Gallery" >
+    update gallery
+    <set >
+      <if test="areaid != null" >
+        areaId = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurl != null" >
+        imageUrl = #{imageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tableid != null" >
+        tableId = #{tableid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        productId = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="subcategoryid != null" >
+        subCategoryId = #{subcategoryid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aktv.project.giangdien.data.model.Gallery" >
+    update gallery
+    set areaId = #{areaid,jdbcType=VARCHAR},
+      imageUrl = #{imageurl,jdbcType=VARCHAR},
+      tableId = #{tableid,jdbcType=VARCHAR},
+      productId = #{productid,jdbcType=VARCHAR},
+      subCategoryId = #{subcategoryid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

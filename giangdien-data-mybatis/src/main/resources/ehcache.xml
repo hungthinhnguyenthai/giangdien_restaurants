@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false"
+         >
+
+  <defaultCache
+      maxElementsInMemory="5000"
+      eternal="true"
+      overflowToDisk="false"
+      memoryStoreEvictionPolicy="LFU"
+      />
+
+  <!--
+    cache name MUST match the name of the namespace in the mapper file
+    where the cache is declared
+  -->
+  <cache
+      name="com.aktv.project.giangdien.data.CacheConfiguration"
+      maxElementsInMemory="500"
+      eternal="true"
+      overflowToDisk="false"
+      memoryStoreEvictionPolicy="LFU"
+      />
+</ehcache>

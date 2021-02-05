@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        p:driverClassName="${datasource.driverClassName}"
+        p:url="${datasource.url}"
+        p:username="${datasource.username}"
+        p:password="${datasource.password}"/>
+
+  <!-- MBean config -->
+  <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean" destroy-method="destroy">
+    <property name="locateExistingServerIfPossible" value="true" />
+  </bean>
+
+  <bean id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter" destroy-method="destroy">
+    <property name="assembler">
+      <bean class="org.springframework.jmx.export.assembler.MethodNameBasedMBeanInfoAssembler">
+        <property name="managedMethods">
+          <list>
+            <value>getNumActive</value>
+            <value>getMaxActive</value>
+            <value>getNumIdle</value>
+          </list>
+        </property>
+        <property name="useStrictCasing" value="false" />
+      </bean>
+    </property>
+    <property name="beans">
+      <map>
+        <entry key="javax.sql:type=DataSource,name=DataSource" value-ref="dataSource"/>
+      </map>
+    </property>
+    <property name="server" ref="mbeanServer" />
+    <property name="registrationBehaviorName" value="REGISTRATION_REPLACE_EXISTING"/>
+  </bean>
+
+</beans>

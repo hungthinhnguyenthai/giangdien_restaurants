@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aktv.project.giangdien.mybatis.mapper.AreaMapper" >
+    <resultMap id="BaseResultFullMap" type="com.aktv.project.giangdien.data.model.Area" >
+        <id column="area_id" property="id" jdbcType="VARCHAR"/>
+        <result column="area_serviceId" property="serviceId" jdbcType="VARCHAR"/>
+        <result column="area_name" property="name" jdbcType="VARCHAR"/>
+        <result column="area_color" property="color" jdbcType="VARCHAR"/>
+        <result column="area_map" property="map" jdbcType="VARCHAR"/>
+        <result column="area_minimap" property="minimap" jdbcType="VARCHAR"/>
+        <collection property="galleries" ofType="com.aktv.project.giangdien.data.model.Gallery">
+            <id column="area_gallery_id" property="id" jdbcType="VARCHAR"/>
+            <result column="area_image" property="imageurl" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="tables" ofType="com.aktv.project.giangdien.data.model.TableLocation">
+            <id column="table_id" property="id" jdbcType="VARCHAR"/>
+            <result column="table_area_id" property="areaId" jdbcType="VARCHAR"/>
+            <result column="table_numberOfSeats" property="numberOfSeats" jdbcType="INTEGER"/>
+            <result column="table_name" property="name" jdbcType="VARCHAR"/>
+            <result column="table_status" property="status" jdbcType="INTEGER" javaType="com.aktv.project.giangdien.data.enums.TableStatus" typeHandler="com.aktv.project.giangdien.mybatis.typehandler.StatusEnumTypeHandler"/>
+            <result column="table_picture" property="picture" jdbcType="VARCHAR"/>
+            <result column="table_posX" property="posX" jdbcType="DOUBLE"/>
+            <result column="table_posY" property="posY" jdbcType="DOUBLE"/>
+            <result column="table_zoom" property="zoom" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <resultMap id="BaseResultMap" type="com.aktv.project.giangdien.data.model.Area" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="map" property="map" jdbcType="VARCHAR" />
+        <result column="minimap" property="minimap" jdbcType="VARCHAR" />
+        <result column="serviceId" property="serviceid" jdbcType="VARCHAR" />
+        <result column="color" property="color" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, name, map, minimap, serviceId, color
+    </sql>
+    <sql id="fullResultMapSelect">
+        a.id as area_id,
+        a.name as area_name,
+        a.map as area_map,
+        a.minimap as area_minimap,
+        a.color as area_color,
+        a.serviceId as area_serviceId,
+        a_img.id as area_gallery_id,
+        a_img.imageUrl as area_image,
+        t.id as table_id,
+        t.areaId as table_area_id,
+        t.name as table_name,
+        t.numberofseats as table_numberOfSeats,
+        t.status as table_status,
+        t.picture as table_picture,
+        t.posx as table_posX,
+        t.posy as table_posY,
+        t.zoom as table_zoom
+    </sql>
+    <select id="selectInRangeAll" resultMap="BaseResultFullMap">
+        SELECT
+        <include refid="fullResultMapSelect"/>
+        FROM
+        area a
+        LEFT JOIN table_location t on a.id = t.areaId
+        LEFT JOIN gallery a_img on a.id = a_img.areaId
+        <if test="serviceId != null">
+            WHERE a.serviceId = #{serviceId,jdbcType=VARCHAR}
+        </if>
+        ORDER BY a.name
+        <if test="index != null and resultSize != null">
+            LIMIT #{index}, #{resultSize}
+        </if>
+        ;
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from area
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from area
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.aktv.project.giangdien.data.model.Area" >
+        insert into area (id, name, map, minimap,
+        serviceId, color)
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{map,jdbcType=VARCHAR}, #{minimap,jdbcType=VARCHAR},
+        #{serviceId,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.aktv.project.giangdien.data.model.Area" >
+        insert into area
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="map != null" >
+                map,
+            </if>
+            <if test="minimap != null" >
+                minimap,
+            </if>
+            <if test="serviceId != null" >
+                serviceId,
+            </if>
+            <if test="color != null" >
+                color,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="map != null" >
+                #{map,jdbcType=VARCHAR},
+            </if>
+            <if test="minimap != null" >
+                #{minimap,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceid != null" >
+                #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="color != null" >
+                #{color,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.aktv.project.giangdien.data.model.Area" >
+        update area
+        <set >
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="map != null" >
+                map = #{map,jdbcType=VARCHAR},
+            </if>
+            <if test="minimap != null" >
+                minimap = #{minimap,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceid != null" >
+                serviceId = #{serviceid,jdbcType=VARCHAR},
+            </if>
+            <if test="color != null" >
+                color = #{color,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.aktv.project.giangdien.data.model.Area" >
+        update area
+        set name = #{name,jdbcType=VARCHAR},
+        map = #{map,jdbcType=VARCHAR},
+        minimap = #{minimap,jdbcType=VARCHAR},
+        serviceId = #{serviceid,jdbcType=VARCHAR},
+        color = #{color,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

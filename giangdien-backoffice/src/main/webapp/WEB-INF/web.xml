@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0">
+
+    <display-name>Giang Dien Java BackOffice</display-name>
+    <description>Giang Dien Java BackOffice</description>
+
+    <resource-ref>
+        <description>Tomcat Datasource Configuration</description>
+        <res-ref-name>jdbc/dataSource</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
+
+    <context-param>
+        <param-name>appName</param-name>
+        <param-value>giangdien-java-backoffice-api</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.aktv.project.giangdien.backoffice.config.ApplicationConfig</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextInitializerClasses</param-name>
+        <param-value>com.aktv.project.config.sping.ApplicationContextInitializerImpl</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>com.aktv.project.giangdien.backoffice.listener.JasperInitializeListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.aktv.project.giangdien.backoffice.spring.FailFastContextLoaderListener</listener-class>
+    </listener>
+
+<!--    <filter>
+        <filter-name>newrelic-filter</filter-name>
+        <filter-class>com.digiposte.core.web.filter.NewRelicFilter</filter-class>
+    </filter>-->
+
+    <servlet>
+        <servlet-name>spring-mvc-bo</servlet-name>
+        <servlet-class>com.aktv.project.giangdien.backoffice.spring.GiangDienDespatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>com.aktv.project.giangdien.backoffice.config.SpringMvcBOConfig</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spring-mvc-bo</servlet-name>
+        <url-pattern>/controller/*</url-pattern>
+    </servlet-mapping>
+
+<!--    <servlet>
+        <servlet-name>spring-mvc-api</servlet-name>
+        <servlet-class>com.aktv.project.giangdien.core.spring.GiangDienDispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>com.aktv.project.giangdien.backoffice.config.SpringMvcAPIConfig</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>-->
+
+<!--    <servlet-mapping>
+        <servlet-name>spring-mvc-api</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>-->
+
+    <filter>
+        <filter-name>encoding-filter</filter-name>
+        <filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>MultipartFilter</filter-name>
+        <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>encoding-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>MultipartFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+
+
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/controller/error/404</location>
+    </error-page>
+
+    <!--<error-page>
+        <error-code>403</error-code>
+        <location>/controller/error/403</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/controller/error/500</location>
+    </error-page>-->
+
+    <session-config>
+        <!-- Disables URL-based sessions (no more 'jsessionid' in the URL using Tomcat) -->
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <mime-mapping>
+        <extension>svg</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>js</extension>
+        <mime-type>application/javascript</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>css</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>jpg</extension>
+        <mime-type>image/jpeg</mime-type>
+    </mime-mapping>
+
+
+</web-app>

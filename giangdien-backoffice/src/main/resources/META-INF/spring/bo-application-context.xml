@@ -1,0 +1,37 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <import resource="classpath:/META-INF/spring/default-placeholders-context.xml"/>
+    <import resource="classpath:/META-INF/spring/bo-datasource-context.xml"/>
+    <import resource="classpath:/META-INF/spring/spring-jpa-context.xml"/>
+    <import resource="classpath:/META-INF/spring/bo-security-context.xml"/>
+
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="fallbackToSystemLocale" value="false"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="basenames">
+            <list>
+                <value>bundles/label</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
+
+    <bean id="localeChangeInterceptor"
+          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="lang" />
+    </bean>
+
+    <bean id="handlerMapping"
+          class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="interceptors">
+            <ref bean="localeChangeInterceptor" />
+        </property>
+    </bean>
+</beans>

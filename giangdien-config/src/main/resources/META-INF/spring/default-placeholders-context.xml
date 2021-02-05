@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+       ">
+
+  <!--
+  The declaration is empty because we are actually using the Spring 3.1 mechanism: PropertySource
+  However, we can declare a file of "local properties" if necessary, which fallback on the Property Sources that are declared.
+  See:
+  com.digiposte.core.spring.properties.AdditionalPropertySources
+
+  In order for the property sources to be taken into account, you must add it to the web.xml
+  <Context-param>
+    <Param-name> contextInitializerClasses </ param-name>
+    <Param-value> com.aktv.project.giangdien.backoffice.spring.GiangDienApplicationContextInitializer </ param-value>
+  </ Context-param>
+
+
+  -->
+  <context:property-placeholder/>
+
+</beans>
